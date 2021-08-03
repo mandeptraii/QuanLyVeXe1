@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'quanlyvexedb' / 'db.sqlite3',
         'USER': 'root',
-        'PASSWORD': 'Mankhung123',
+        'PASSWORD': '12345678',
         'HOST': ''
     }
 }
