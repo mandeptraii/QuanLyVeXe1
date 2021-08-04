@@ -77,13 +77,14 @@ WSGI_APPLICATION = 'quanlyvexe.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'quanlyvexedb' / 'db.sqlite3',
+        'NAME': 'busdb' ,
         'USER': 'root',
-        'PASSWORD': 'Mankhung123',
+        'PASSWORD': '12345678',
         'HOST': ''
     }
 }
 
+AUTH_USER_MODEL='quanly.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
