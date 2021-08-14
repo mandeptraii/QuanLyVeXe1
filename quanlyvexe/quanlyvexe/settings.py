@@ -84,7 +84,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL='quanly.User'
+AUTH_USER_MODEL = 'quanly.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
