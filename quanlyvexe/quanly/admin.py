@@ -1,9 +1,33 @@
 from django.contrib import admin
 from django import forms
+from django.db.models import Count
+from django.template.response import TemplateResponse
 from django.utils.html import mark_safe
 from .models import *
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django.urls import path
 # Register your models here.
+
+
+class QuanLyVeXeAdminSite(admin.AdminSite):
+    site_header = 'He thong quan ly ve xe'
+
+    def get_urls(self):
+        return [
+            path('quanly-stats/', self.quanly_stats)
+        ] + super().get_urls()
+
+    def quanly_stats(self, request):
+        benxe_count = BenXe.objects.count()
+        stats = XeBaoTri.objects.annotate(xe_count=Count('Xe')).values("id", "xe_count")
+
+        return TemplateResponse(request, 'admin/quanly-stats.html', {
+            'benxe_count': benxe_count,
+            'stats':  stats
+        })
+
+
+admin_site = QuanLyVeXeAdminSite('quanly')
 
 
 class NoiDungForm(forms.ModelForm):
@@ -36,16 +60,30 @@ class DanhGiaAdmin(admin.ModelAdmin):
     form = NoiDungForm
 
 
-admin.site.register(BenXe, BenXeAdmin)
-admin.site.register(User, UserAdmin)
-admin.site.register(NhanVienBanVe)
-admin.site.register(TaiXe)
-admin.site.register(KhachHang)
-admin.site.register(Ghe)
-admin.site.register(Xe)
-admin.site.register(XeVaGhe)
-admin.site.register(Tuyen)
-admin.site.register(Chuyen)
-admin.site.register(ChiTieu)
-admin.site.register(DanhGia, DanhGiaAdmin)
-admin.site.register(XeBaoTri)
+# admin.site.register(BenXe, BenXeAdmin)
+# admin.site.register(User, UserAdmin)
+# admin.site.register(NhanVienBanVe)
+# admin.site.register(TaiXe)
+# admin.site.register(KhachHang)
+# admin.site.register(Ghe)
+# admin.site.register(Xe)
+# admin.site.register(XeVaGhe)
+# admin.site.register(Tuyen)
+# admin.site.register(Chuyen)
+# admin.site.register(ChiTieu)
+# admin.site.register(DanhGia, DanhGiaAdmin)
+# admin.site.register(XeBaoTri)
+
+admin_site.register(BenXe, BenXeAdmin)
+admin_site.register(User, UserAdmin)
+admin_site.register(NhanVienBanVe)
+admin_site.register(TaiXe)
+admin_site.register(KhachHang)
+admin_site.register(Ghe)
+admin_site.register(Xe)
+admin_site.register(XeVaGhe)
+admin_site.register(Tuyen)
+admin_site.register(Chuyen)
+admin_site.register(ChiTieu)
+admin_site.register(DanhGia, DanhGiaAdmin)
+admin_site.register(XeBaoTri)
