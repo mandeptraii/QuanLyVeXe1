@@ -1,3 +1,4 @@
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from ckeditor.fields import RichTextField
@@ -78,8 +79,8 @@ class XeVaGhe(models.Model):
 
 
 class Tuyen(models.Model):
-    NoiKhoiHanh = models.ForeignKey(BenXe, related_name="TuyenKhoiHanh", on_delete=models.CASCADE, null=True)
-    NoiDen = models.ForeignKey(BenXe, related_name="TuyenDen", on_delete=models.CASCADE, null=True)
+    NoiKhoiHanh = models.ForeignKey(BenXe, related_name="tuyen_khoi_hanh", on_delete=models.CASCADE, null=True)
+    NoiDen = models.ForeignKey(BenXe, related_name="tuyen_den", on_delete=models.CASCADE, null=True)
     GiaTien = models.DecimalField(max_digits=8, decimal_places=2, null=True)
 
     class Meta:
@@ -109,7 +110,7 @@ class ChiTieu(models.Model):
 
 
 class XeBaoTri(models.Model):
-    Xe = models.ForeignKey(Xe, on_delete=models.SET_NULL, null=True)
+    Xe = models.ForeignKey(Xe, related_name="xe", on_delete=models.SET_NULL, null=True)
     ThoiDiem = models.DateField(auto_now_add=True)
 
     class Meta:
@@ -119,7 +120,7 @@ class XeBaoTri(models.Model):
 class DanhGia(models.Model):
     NguoiDung = models.ForeignKey(KhachHang, on_delete=models.SET_NULL, null=True)
     ThoiGian = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    NoiDung = RichTextField()
+    NoiDung = RichTextUploadingField()
     SoSao = models.FloatField()
     Chuyen = models.ForeignKey(Chuyen, on_delete=models.CASCADE)
 
