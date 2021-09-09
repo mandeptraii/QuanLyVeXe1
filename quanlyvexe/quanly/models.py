@@ -32,7 +32,7 @@ class NhanVienBanVe(User):
 
 class TaiXe(User):
     DiemUyTin = models.FloatField()
-    LaiChinh = models.BooleanField(default=True)
+    ThuViec = models.BooleanField(default=False)
     ChuyenDaLai = models.IntegerField(default=0)
     BenXe = models.ForeignKey(BenXe, on_delete=models.CASCADE, default=None)
     TienLuong = models.DecimalField(max_digits=8, decimal_places=2, null=True)
@@ -63,6 +63,10 @@ class Xe(models.Model):
     DaKhoiHanh = models.BooleanField(default=False)
     BienSoXe = models.CharField(max_length=20)
     GheDaDat = models.IntegerField()
+    BenXe = models.ForeignKey(BenXe, on_delete=models.CASCADE, default=None)
+
+    def __str__(self):
+        return self.BienSoXe
 
     class Meta:
         verbose_name_plural = "Xe"
