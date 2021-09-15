@@ -17,36 +17,16 @@ class BenXe(models.Model):
 class User(AbstractUser):
     NamSinh = models.DateField(null=True)
     avatar = models.ImageField(upload_to='uploads/%Y/%m')
+    BenXe = models.ForeignKey(BenXe, on_delete=models.CASCADE, default=None, null=True)
+    TienLuong = models.DecimalField(max_digits=8, decimal_places=2, default=None, null=True)
+    DiemUyTin = models.FloatField(null=True)
+    ThuViec = models.BooleanField(default=None, null=True)
+    ChuyenDaLai = models.IntegerField(default=None, null=True)
+    DoThanThiet = models.IntegerField(default=None, null=True)
+    SoVeDaDat = models.IntegerField(default=None, null=True)
 
     class Meta:
         verbose_name_plural = "Admin"
-
-
-class NhanVienBanVe(User):
-    BenXe = models.ForeignKey(BenXe, on_delete=models.CASCADE, default=None)
-    TienLuong = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-
-    class Meta:
-        verbose_name_plural = "Nhân viên bán vé"
-
-
-class TaiXe(User):
-    DiemUyTin = models.FloatField()
-    ThuViec = models.BooleanField(default=False)
-    ChuyenDaLai = models.IntegerField(default=0)
-    BenXe = models.ForeignKey(BenXe, on_delete=models.CASCADE, default=None)
-    TienLuong = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-
-    class Meta:
-        verbose_name_plural = "Tài xế"
-
-
-class KhachHang(User):
-    DoThanThiet = models.IntegerField(default=0)
-    SoVeDaDat = models.IntegerField(default=0)
-
-    class Meta:
-        verbose_name_plural = "Khách hàng"
 
 
 class Ghe(models.Model):
@@ -97,7 +77,7 @@ class Chuyen(models.Model):
     ThoiDiemDi = models.DateTimeField()
     ThoiGianDuKien = models.IntegerField()
     DaKhoiHanh = models.BooleanField()
-    TaiXe = models.ForeignKey(TaiXe, on_delete=models.SET_NULL, null=True)
+    TaiXe = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     DoanhThu = models.DecimalField(max_digits=8, decimal_places=2, null=True)
 
     class Meta:
@@ -105,8 +85,8 @@ class Chuyen(models.Model):
 
 
 class ChiTieu(models.Model):
-    NhanVienBanVe = models.ForeignKey(NhanVienBanVe, on_delete=models.SET_NULL, null=True)
-    TaiXe = models.ForeignKey(TaiXe, on_delete=models.SET_NULL, null=True)
+    NhanVienBanVe = models.ForeignKey(User, related_name="ChiTieuNhanVien", on_delete=models.SET_NULL, null=True)
+    TaiXe = models.ForeignKey(User, related_name="ChiTieuTaiXe", on_delete=models.SET_NULL, null=True)
     ThoiDiem = models.DateField()
 
     class Meta:
@@ -122,7 +102,7 @@ class XeBaoTri(models.Model):
 
 
 class DanhGia(models.Model):
-    NguoiDung = models.ForeignKey(KhachHang, on_delete=models.SET_NULL, null=True)
+    NguoiDung = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     ThoiGian = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     NoiDung = RichTextUploadingField()
     SoSao = models.FloatField()
