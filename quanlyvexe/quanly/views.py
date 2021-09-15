@@ -1,25 +1,25 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
-from rest_framework import viewsets, permissions, status
+from rest_framework.parsers import MultiPartParser
+from rest_framework import viewsets, permissions, status, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
 from .models import *
 from .serializers import *
 # Create your views here.
 
 
-# class BenXeViewSet(viewsets.ModelViewSet):
-#     queryset = BenXe.objects.all()
-#     serializer_class = QuanlySerializer
-#     # permission_classes = [permissions.IsAuthenticated]
-#
-#     def get_permissions(self):
-#         if self.action == 'list':
-#             return [permissions.AllowAny()]
-#
-#         return [permissions.IsAuthenticated()]
+class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.RetrieveAPIView):
+    queryset = User.objects.filter(is_active=True)
+    serializer_class = UserSerializer
+    parser_classes = [MultiPartParser, ]
+
+    def get_permissions(self):
+        if self.action == 'retrieve':
+            return [permissions.IsAuthenticated()]
+
+        return [permissions.AllowAny()]
 
 
 class XeViewSet(viewsets.ModelViewSet):
@@ -27,11 +27,11 @@ class XeViewSet(viewsets.ModelViewSet):
     serializer_class = XeSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [permissions.AllowAny()]
-
-        return [permissions.IsAuthenticated()]
+    # def get_permissions(self):
+    #     if self.action == 'list':
+    #         return [permissions.AllowAny()]
+    #
+    #     return [permissions.IsAuthenticated()]
 
     @action(methods=['post'], detail=True)
     def hide_xe(self, request, pk):
