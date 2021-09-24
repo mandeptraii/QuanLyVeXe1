@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.parsers import MultiPartParser
 from rest_framework import viewsets, permissions, status, generics
 from rest_framework.decorators import action
@@ -10,28 +11,40 @@ from .serializers import *
 # Create your views here.
 
 
-class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.RetrieveAPIView):
+class GheViewSet(viewsets.ViewSet, generics.ListAPIView):
+    queryset = Ghe.objects.all()
+    serializer_class = GheSerializer
+    pagination_class = None
+
+
+class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.RetrieveAPIView, generics.UpdateAPIView):
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
     parser_classes = [MultiPartParser, ]
 
-    def get_permissions(self):
-        if self.action == 'retrieve':
-            return [permissions.IsAuthenticated()]
+    # def get_permissions(self):
+    #     if self.action == 'retrieve':
+    #         return [permissions.IsAuthenticated()]
+    #
+    #     return [permissions.AllowAny()]
 
-        return [permissions.AllowAny()]
+
+class XePagination(PageNumberPagination):
+    page_size = 3
 
 
 class XeViewSet(viewsets.ModelViewSet):
     queryset = Xe.objects.all()
     serializer_class = XeSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    pagination_class = XePagination
 
-    # def get_permissions(self):
-    #     if self.action == 'list':
-    #         return [permissions.AllowAny()]
-    #
-    #     return [permissions.IsAuthenticated()]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            return [permissions.AllowAny()]
+
+        return [permissions.IsAuthenticated()]
 
     @action(methods=['post'], detail=True)
     def hide_xe(self, request, pk):
@@ -48,6 +61,7 @@ class XeViewSet(viewsets.ModelViewSet):
 class BenXeViewSet(viewsets.ModelViewSet):
     queryset = BenXe.objects.all()
     serializer_class = BenXeSerializer
+    pagination_class = None
 
 
 # def index(request):
