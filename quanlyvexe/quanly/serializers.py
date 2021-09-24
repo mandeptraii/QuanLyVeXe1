@@ -2,6 +2,12 @@ from rest_framework.serializers import ModelSerializer
 from .models import *
 
 
+class GheSerializer(ModelSerializer):
+    class Meta:
+        model = Ghe
+        fields = "__all__"
+
+
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User

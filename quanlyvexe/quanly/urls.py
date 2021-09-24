@@ -5,9 +5,11 @@ from .admin import admin_site
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('xe', views.XeViewSet)
-router.register('benxe', views.BenXeViewSet)
-router.register('users', views.UserViewSet)
+router.register('xe', views.XeViewSet, basename='xe')
+router.register('benxe', views.BenXeViewSet, basename='benxe')
+router.register('user', views.UserViewSet, basename='user')
+router.register('ghe', views.GheViewSet, basename='ghe')
+
 
 urlpatterns = [
     path('', include(router.urls)),
