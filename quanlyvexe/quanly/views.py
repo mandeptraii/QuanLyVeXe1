@@ -17,10 +17,20 @@ class GheViewSet(viewsets.ViewSet, generics.ListAPIView):
     pagination_class = None
 
 
-class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.RetrieveAPIView, generics.UpdateAPIView):
+class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIView):
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
     parser_classes = [MultiPartParser, ]
+
+    def get_permissions(self):
+        if self.action == 'current_user':
+            return [permissions.IsAuthenticated()]
+
+        return [permissions.AllowAny()]
+
+    @action(methods=['get'], detail=False, url_path='current-user')
+    def current_user(self, request):
+        return Response(self.serializer_class(request.user).data)
 
     # def get_permissions(self):
     #     if self.action == 'retrieve':
@@ -38,13 +48,13 @@ class XeViewSet(viewsets.ModelViewSet):
     serializer_class = XeSerializer
     pagination_class = XePagination
 
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [permissions.AllowAny()]
-
-        return [permissions.IsAuthenticated()]
+    # def get_permissions(self):
+    #     if self.action == 'list':
+    #         return [permissions.AllowAny()]
+    #
+    #     return [permissions.IsAuthenticated()]
 
     @action(methods=['post'], detail=True)
     def hide_xe(self, request, pk):

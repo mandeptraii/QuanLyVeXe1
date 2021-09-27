@@ -8,7 +8,7 @@ class BenXe(models.Model):
     DiaDiem = models.CharField(max_length=255)
 
     def __str__(self):
-        return "Bến xe " + self.DiaDiem
+        return self.DiaDiem
 
     class Meta:
         verbose_name_plural = "Bến xe"
@@ -26,7 +26,7 @@ class User(AbstractUser):
     SoVeDaDat = models.IntegerField(default=None, null=True)
 
     class Meta:
-        verbose_name_plural = "Admin"
+        verbose_name_plural = "User"
 
 
 class Ghe(models.Model):
@@ -66,6 +66,9 @@ class Tuyen(models.Model):
     NoiKhoiHanh = models.ForeignKey(BenXe, related_name="tuyen_khoi_hanh", on_delete=models.CASCADE, null=True)
     NoiDen = models.ForeignKey(BenXe, related_name="tuyen_den", on_delete=models.CASCADE, null=True)
     GiaTien = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+
+    def __str__(self):
+        return str(self.NoiKhoiHanh) + " -> " + str(self.NoiDen)
 
     class Meta:
         verbose_name_plural = "Tuyến"
