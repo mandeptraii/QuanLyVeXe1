@@ -3,7 +3,7 @@ import { MenuItems } from './MenuItems';
 import { Button } from '../Button';
 import './NavBar.css';
 import { BrowserRouter, Switch, Route, Link} from 'react-router-dom';
-import Home from '../Home';
+
 
 class Navbar extends Component {
     state = {clicked:false}
@@ -33,7 +33,7 @@ class Navbar extends Component {
                     <Button>Đăng nhập</Button>
                 </nav>
                 <Switch>
-                    <Route exact path="/home" component={Home} />
+                 {/* <Route exact path="/home" component={Home} /> */}
                 </Switch>
             </BrowserRouter>
         )
