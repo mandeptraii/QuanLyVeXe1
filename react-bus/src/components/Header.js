@@ -26,7 +26,7 @@ class Header extends React.Component{
             <Nav.Link href="/login">Đăng nhập</Nav.Link>
         </>
         if(user != null)
-        r = <Nav.Link href="/">{user.username}</Nav.Link>
+            r = <Nav.Link href="/">{user.username}</Nav.Link>
         return(
             <>
                 <Navbar bg="light" expand="lg">
