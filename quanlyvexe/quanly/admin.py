@@ -57,6 +57,10 @@ class UserAdmin(admin.ModelAdmin):
         return mark_safe("<img src='/static/{img_url}' alt='w' width='120px' />".format(img_url=user.avatar.name))
 
 
+class ChuyenAdmin(admin.ModelAdmin):
+    list_display = ["id", "Tuyen", "ThoiDiemDi"]
+
+
 class DanhGiaAdmin(admin.ModelAdmin):
     form = NoiDungForm
 
@@ -67,7 +71,7 @@ admin.site.register(Ghe)
 admin.site.register(Xe)
 admin.site.register(XeVaGhe)
 admin.site.register(Tuyen)
-admin.site.register(Chuyen)
+admin.site.register(Chuyen, ChuyenAdmin)
 admin.site.register(ChiTieu)
 admin.site.register(DanhGia, DanhGiaAdmin)
 admin.site.register(XeBaoTri)

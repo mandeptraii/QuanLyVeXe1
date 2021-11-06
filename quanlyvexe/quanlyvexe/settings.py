@@ -106,7 +106,7 @@ WSGI_APPLICATION = 'quanlyvexe.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'quanlyvexe1',
+        'NAME': 'quanlyvexe4',
         'USER': 'root',
         'PASSWORD': 'Mankhung123',
         'HOST': ''

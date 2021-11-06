@@ -18,7 +18,7 @@ class User(AbstractUser):
     NamSinh = models.DateField(null=True)
     avatar = models.ImageField(upload_to='uploads/%Y/%m')
     BenXe = models.ForeignKey(BenXe, on_delete=models.CASCADE, default=None, null=True)
-    TienLuong = models.DecimalField(max_digits=8, decimal_places=2, default=None, null=True)
+    TienLuong = models.DecimalField(max_digits=12, decimal_places=0, default=None, null=True)
     DiemUyTin = models.FloatField(null=True)
     ThuViec = models.BooleanField(default=None, null=True)
     ChuyenDaLai = models.IntegerField(default=None, null=True)
@@ -55,7 +55,7 @@ class Xe(models.Model):
 class XeVaGhe(models.Model):
     Xe = models.ForeignKey(Xe, on_delete=models.CASCADE)
     Ghe = models.ForeignKey(Ghe, on_delete=models.CASCADE)
-    GiaTien = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    GiaTien = models.DecimalField(max_digits=12, decimal_places=0, null=True)
     DaDat = models.BooleanField(default=False)
 
     class Meta:
@@ -65,7 +65,7 @@ class XeVaGhe(models.Model):
 class Tuyen(models.Model):
     NoiKhoiHanh = models.ForeignKey(BenXe, related_name="tuyen_khoi_hanh", on_delete=models.CASCADE, null=True)
     NoiDen = models.ForeignKey(BenXe, related_name="tuyen_den", on_delete=models.CASCADE, null=True)
-    GiaTien = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    GiaTien = models.DecimalField(max_digits=12, decimal_places=0, null=True)
 
     def __str__(self):
         return str(self.NoiKhoiHanh) + " -> " + str(self.NoiDen)
@@ -81,10 +81,20 @@ class Chuyen(models.Model):
     ThoiGianDuKien = models.IntegerField()
     DaKhoiHanh = models.BooleanField()
     TaiXe = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    DoanhThu = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    DoanhThu = models.DecimalField(max_digits=12, decimal_places=0, null=True)
 
     class Meta:
         verbose_name_plural = "Chuyến"
+
+
+class VeXe(models.Model):
+    KhachHang = models.ForeignKey(User, on_delete=models.CASCADE)
+    Chuyen = models.ForeignKey(Chuyen, on_delete=models.CASCADE)
+    GiaTien = models.DecimalField(max_digits=12, decimal_places=0, null=True)
+    SoLuong = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = "Vé xe"
 
 
 class ChiTieu(models.Model):
