@@ -42,7 +42,10 @@ class Register extends React.Component{
             }).then((res) => {
                 console.info(res)
             }).catch(err => console.error(err))
+            alert("Bạn đã đăng ký thành công")
         }
+        else
+            alert("Bạn vui lòng điền đầy đủ thông tin và nhập chính xác mật khẩu lần 2")
 
         event.preventDefault() //Chặn xử lý mặc định của form để gọi đúng bất đồng bộ
     }
@@ -53,11 +56,11 @@ class Register extends React.Component{
                 <h1 class="text-center text-danger">Đăng ký người dùng</h1>
                 <Form onSubmit={this.register}>
                     <RegisterForm id="email" label="Email" type="email" field={this.state.user.email} change={this.change.bind(this, 'email')}/>
-                    <RegisterForm id="firstName" label="First Name" type="text" field={this.state.user.first_name} change={this.change.bind(this, 'first_name')}/>
-                    <RegisterForm id="lastname" label="Last Name" type="text" field={this.state.user.last_name} change={this.change.bind(this, 'last_name')}/>
-                    <RegisterForm id="username" label="Username" type="text" field={this.state.user.username} change={this.change.bind(this, 'username')}/>
-                    <RegisterForm id="password" label="Password" type="password" field={this.state.user.password} change={this.change.bind(this, 'password')}/>
-                    <RegisterForm id="comfirmPass" label="Confirm Password" type="password" field={this.state.user.confirm_password} change={this.change.bind(this, 'confirm_password')}/>
+                    <RegisterForm id="firstName" label="Họ" type="text" field={this.state.user.first_name} change={this.change.bind(this, 'first_name')}/>
+                    <RegisterForm id="lastname" label="Tên" type="text" field={this.state.user.last_name} change={this.change.bind(this, 'last_name')}/>
+                    <RegisterForm id="username" label="Tài khoản" type="text" field={this.state.user.username} change={this.change.bind(this, 'username')}/>
+                    <RegisterForm id="password" label="Mật khẩu" type="password" field={this.state.user.password} change={this.change.bind(this, 'password')}/>
+                    <RegisterForm id="comfirmPass" label="Xác nhận mật khẩu" type="password" field={this.state.user.confirm_password} change={this.change.bind(this, 'confirm_password')}/>
                     <Form.Group controlId='avatar'>
                         <Form.Label>Avatar</Form.Label>
                         <Form.Control type="file" ref={this.avatar} />
