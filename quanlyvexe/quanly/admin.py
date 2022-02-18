@@ -67,14 +67,9 @@ class DanhGiaAdmin(admin.ModelAdmin):
 
 admin.site.register(BenXe, BenXeAdmin)
 admin.site.register(User, UserAdmin)
-admin.site.register(Ghe)
 admin.site.register(Xe)
-admin.site.register(XeVaGhe)
 admin.site.register(Tuyen)
 admin.site.register(Chuyen, ChuyenAdmin)
-admin.site.register(ChiTieu)
-admin.site.register(DanhGia, DanhGiaAdmin)
-admin.site.register(XeBaoTri)
 
 # admin_site.register(BenXe, BenXeAdmin)
 # admin_site.register(User, UserAdmin)
